@@ -1,0 +1,49 @@
+<%- include('navbar') %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="content-wrapper">
+            <h1 class="text-center mb-4" style="font-size: 2.5rem; font-weight: 700; color: #000000;">
+                All Articles
+            </h1>
+            
+            <% if (articles.length > 0) { %>
+                <% articles.forEach(article => { %>
+                    <div class="article-card">
+                        <h2>
+                            <a href="/articles/<%= article._id %>" class="article-title">
+                                <%= article.title %>
+                            </a>
+                        </h2>
+                        <div class="article-meta">
+                            <span class="article-author">By <%= article.author.username %></span>
+                            <span><%= new Date(article.createdAt).toLocaleDateString() %></span>
+                        </div>
+                        <div class="article-content">
+                            <%= article.content.length > 200 ? article.content.substring(0, 200) + '...' : article.content %>
+                        </div>
+                        <div class="article-actions">
+                            <a href="/articles/<%= article._id %>" class="btn btn-primary">Read More</a>
+                            <% if (user && (user._id.toString() === article.author._id.toString() || user.role === 'admin')) { %>
+                                <a href="/articles/<%= article._id %>/edit" class="btn btn-secondary">Edit</a>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <div class="empty-state-title">No articles yet</div>
+                    <div class="empty-state-text">Be the first to share your thoughts!</div>
+                    <% if (user) { %>
+                        <a href="/articles/new" class="btn btn-primary">Create First Article</a>
+                    <% } else { %>
+                        <a href="/register" class="btn btn-primary">Sign Up to Write</a>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include('footer') %>

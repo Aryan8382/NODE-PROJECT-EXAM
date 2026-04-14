@@ -1,0 +1,23 @@
+<%- include('navbar') %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="empty-state">
+                <div class="empty-state-icon">⚠️</div>
+                <div class="empty-state-title">Oops! Something went wrong</div>
+                <div class="empty-state-text"><%= message || 'An unexpected error occurred' %></div>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="/" class="btn btn-primary">Go Home</a>
+                    <% if (user) { %>
+                        <a href="/my-articles" class="btn btn-secondary">My Articles</a>
+                    <% } else { %>
+                        <a href="/login" class="btn btn-secondary">Login</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('footer') %>

@@ -1,0 +1,51 @@
+<%- include('navbar') %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="content-wrapper">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1 style="font-size: 2.5rem; font-weight: 700; color: #000000;">
+                    My Articles
+                </h1>
+                <a href="/articles/new" class="btn btn-primary">+ New Article</a>
+            </div>
+            
+            <% if (articles.length > 0) { %>
+                <% articles.forEach(article => { %>
+                    <div class="article-card">
+                        <h2>
+                            <a href="/articles/<%= article._id %>" class="article-title">
+                                <%= article.title %>
+                            </a>
+                        </h2>
+                        <div class="article-meta">
+                            <span class="article-author">By <%= article.author.username %></span>
+                            <span><%= new Date(article.createdAt).toLocaleDateString() %></span>
+                            <span><%= new Date(article.updatedAt).toLocaleDateString() !== new Date(article.createdAt).toLocaleDateString() ? 'Updated ' + new Date(article.updatedAt).toLocaleDateString() : '' %></span>
+                        </div>
+                        <div class="article-content">
+                            <%= article.content.length > 200 ? article.content.substring(0, 200) + '...' : article.content %>
+                        </div>
+                        <div class="article-actions">
+                            <a href="/articles/<%= article._id %>" class="btn btn-primary">View</a>
+                            <a href="/articles/<%= article._id %>/edit" class="btn btn-secondary">Edit</a>
+                            <form action="/api/articles/<%= article._id %>" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this article?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <div class="empty-state-title">You haven't written any articles yet</div>
+                    <div class="empty-state-text">Start sharing your thoughts with the world!</div>
+                    <a href="/articles/new" class="btn btn-primary">Write Your First Article</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include('footer') %>

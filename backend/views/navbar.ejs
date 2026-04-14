@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Modern Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">Modern Blog</a>
+                <ul class="navbar-nav">
+                    <% if (user) { %>
+                        <li><a href="/" class="nav-link <%= title === 'All Articles' ? 'active' : '' %>">All Articles</a></li>
+                        <li><a href="/my-articles" class="nav-link <%= title === 'My Articles' ? 'active' : '' %>">My Articles</a></li>
+                        <li><a href="/articles/new" class="nav-link <%= title === 'Create Article' ? 'active' : '' %>">New Article</a></li>
+                        <li>
+                            <span class="nav-link" style="background: #000000; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem;">
+                                <%= user.username %> (<%= user.role %>)
+                            </span>
+                        </li>
+                        <li>
+                            <form action="/api/auth/logout" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Sign Out</button>
+                            </form>
+                        </li>
+                    <% } else { %>
+                        <li><a href="/" class="nav-link <%= title === 'All Articles' ? 'active' : '' %>">All Articles</a></li>
+                        <li><a href="/login" class="nav-link <%= title === 'Login' ? 'active' : '' %>">Login</a></li>
+                        <li><a href="/register" class="nav-link <%= title === 'Register' ? 'active' : '' %>">Register</a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
